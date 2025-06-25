@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const RootPage = () => {
   return (
     <div>
       <Navbar />
-      <Outlet />
-      <Footer />
+      <div className="min-h-[82vh]">
+        <Outlet />
+      </div>
     </div>
   );
 };
