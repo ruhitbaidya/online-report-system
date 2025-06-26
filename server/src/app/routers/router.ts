@@ -10,6 +10,6 @@ const makeRouter = [
   },
 ];
 
-makeRouter.forEach((item) => router.use(item.path, item.element));
+makeRouter.forEach((item) => router.use(`/api/${item.path}`, item.element));
 
 export default router;
