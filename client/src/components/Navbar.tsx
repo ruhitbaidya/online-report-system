@@ -21,7 +21,25 @@ const Navbar = () => {
                 <NavLink to="/report">Report</NavLink>
               </li>
               <li>
+                <NavLink to="/checkReport">Check Report</NavLink>
+              </li>
+              <li>
                 <NavLink to="/order">Order Entry</NavLink>
+              </li>
+              <li>
+                <NavLink to="/sendReport">Send Report</NavLink>
+              </li>
+              <li>
+                <NavLink to="/createClientUser">Create User</NavLink>
+              </li>
+              <li>
+                <NavLink to="/createDoctorUser">Create Doctor</NavLink>
+              </li>
+              <li>
+                <NavLink to="/aproveOrder">Approve Order</NavLink>
+              </li>
+              <li>
+                <NavLink to="/reportMonitor">Report Monitor</NavLink>
               </li>
             </ul>
           </div>
