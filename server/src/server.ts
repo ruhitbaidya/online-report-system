@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { configs } from "./app/config/configs.js";
-import app from "./app.js";
+import { configs } from "./app/config/configs";
+import app from "./app";
 
 const startServer = async () => {
   try {
     await mongoose.connect(configs.db_url as string);
-    console.log("Connect Your  Database")
+    console.log("Connect Your  Database");
     app.listen(configs.port, () => {
       console.log("Connect This Server");
     });
