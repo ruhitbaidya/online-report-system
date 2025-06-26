@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FaBell } from "react-icons/fa6";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
@@ -10,9 +10,7 @@ const Navbar = () => {
       <div className="container mx-auto px-[10px]">
         <div className="flex justify-between items-center">
           <div>
-            <Link to="/">
-              <h3 className="text-2xl font-bold">RJ Online</h3>
-            </Link>
+            <h3 className="text-2xl font-bold">RJ Online</h3>
           </div>
           <div>
             <ul className="flex justify-center items-center gap-[30px]">

@@ -6,10 +6,25 @@ const OrderEntry = () => {
           <h2 className="font-bold text-2xl my-[20px]">Order Entry</h2>
           <div className="w-[80%] mx-auto border rounded-lg p-[10px]">
             <div className="mb-[10px]">
-              <div>
-                <h2 className="font-bold border p-[10px] rounded-lg">
+              <div className="flex justify-between items-center gap-[30px]">
+                <h2 className="font-bold border p-[8px] rounded-lg flex-1">
                   The Popular Diagnostic Center
                 </h2>
+                <button className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg">
+                  New Doctor Entry
+                </button>
+              </div>
+            </div>
+            <div className="mb-[10px]">
+              <div>
+                <label className="block" htmlFor="pasentId">
+                  Pasent Id :{" "}
+                </label>
+                <input
+                  className="focus:outline-none border p-[6px] rounded-lg"
+                  type="text"
+                  placeholder="Pasent Id"
+                />
               </div>
             </div>
             <div className="flex justify-between items-center gap-[30px] mb-[10px]">
