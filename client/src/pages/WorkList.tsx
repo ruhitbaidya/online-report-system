@@ -75,19 +75,19 @@ const WorkList = () => {
           </div>
           <div className="my-[10px]">
             <div className="flex justify-center items-center gap-[15px] font-bold">
-              <button className="bg-gray-800 text-white p-[10px]">
+              <button className="bg-gray-800 text-white p-[10px] rounded-lg">
                 <FaArrowLeft size={22} />
               </button>
-              <button className="bg-gray-800 text-white py-[8px] px-[12px] text-[17px]">
+              <button className="bg-gray-800 text-white py-[8px] rounded-lg px-[12px] text-[17px]">
                 1
               </button>
-              <button className="bg-gray-800 text-white py-[8px] px-[12px] text-[17px]">
+              <button className="bg-gray-800 text-white py-[8px] rounded-lg px-[12px] text-[17px]">
                 2
               </button>
-              <button className="bg-gray-800 text-white py-[8px] px-[12px] text-[17px]">
+              <button className="bg-gray-800 text-white py-[8px] rounded-lg px-[12px] text-[17px]">
                 3
               </button>
-              <button className="bg-gray-800 text-white p-[10px]">
+              <button className="bg-gray-800 text-white p-[10px] rounded-lg">
                 <FaArrowRight size={22} />
               </button>
             </div>
