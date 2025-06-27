@@ -6,7 +6,6 @@ import OrderEntry from "../pages/OrderEntry";
 import Report from "../pages/Report";
 import Login from "../pages/Login";
 import CheckReport from "../pages/CheckReport";
-import SendReport from "../pages/SendReport";
 import CreateUser from "../pages/CreateUser";
 import CreateDoctor from "../pages/CreateDoctor";
 import AproveOrder from "../pages/AproveOrder";
@@ -36,10 +35,6 @@ const router = createBrowserRouter([
       {
         path: "/checkReport",
         element: <CheckReport />,
-      },
-      {
-        path: "/sendReport",
-        element: <SendReport />,
       },
       {
         path: "/createClientUser",

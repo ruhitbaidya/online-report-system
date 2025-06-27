@@ -27,9 +27,6 @@ const Navbar = () => {
                 <NavLink to="/order">Order Entry</NavLink>
               </li>
               <li>
-                <NavLink to="/sendReport">Send Report</NavLink>
-              </li>
-              <li>
                 <NavLink to="/createClientUser">Create User</NavLink>
               </li>
               <li>
