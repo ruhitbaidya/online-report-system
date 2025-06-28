@@ -43,9 +43,10 @@ const CheckReport = () => {
                     123
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
-                      Complate
-                    </span>
+                    <select name="" id="">
+                      <option value="">In Progress</option>
+                      <option value="">Complate</option>
+                    </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     Ruhit Baidya
@@ -54,9 +55,34 @@ const CheckReport = () => {
                     27 Yrs
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    <button className="bg-gray-700 text-white px-[25px] py-[8px] rounded-lg">
+                    {/* Open the modal using document.getElementById('ID').showModal() method */}
+                    <button
+                      className="bg-gray-700 text-white px-[25px] py-[8px] rounded-lg"
+                      onClick={() => {
+                        const modal = document.getElementById(
+                          "my_modal_1"
+                        ) as HTMLDialogElement | null;
+                        if (modal) {
+                          modal.showModal();
+                        }
+                      }}
+                    >
                       Create Report
                     </button>
+                    <dialog id="my_modal_1" className="modal">
+                      <div className="modal-box">
+                        <h3 className="font-bold text-lg">Hello!</h3>
+                        <p className="py-4">
+                          Press ESC key or click the button below to close
+                        </p>
+                        <div className="modal-action">
+                          <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Close</button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     Chest P/A View

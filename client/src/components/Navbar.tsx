@@ -15,7 +15,7 @@ const Navbar = () => {
           <div>
             <ul className="flex justify-center items-center gap-[30px]">
               <li>
-                <NavLink to="/worklist">Worklist</NavLink>
+                <NavLink to="/">Worklist</NavLink>
               </li>
               <li>
                 <NavLink to="/report">Report</NavLink>
