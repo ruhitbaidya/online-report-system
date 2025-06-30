@@ -8,7 +8,7 @@ export type TReport = {
   testName: string;
   history: string;
   reportImage: string;
-  isDelete: boolean;
+  isDelete?: boolean;
   clientId: Types.ObjectId;
   doctorsId?: Types.ObjectId;
 };
