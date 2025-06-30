@@ -1,9 +1,9 @@
 import express from "express";
+import { doctorsCotroler } from "./doctor.controler";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("my name is ruhit");
-});
+router.post("/create-doctors", doctorsCotroler.createDoctor);
+router.get("/get-all-doctors", doctorsCotroler.getAllDoctors);
 
 export const doctorRouter = router;

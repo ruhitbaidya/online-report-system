@@ -17,10 +17,10 @@ const CreateDoctor = () => {
                 />
               </div>
               <div className="flex-1">
-                <label htmlFor="name">Enter Email</label>
+                <label htmlFor="name">Doctors Degrees</label>
                 <input
-                  type="email"
-                  placeholder="Enter Doctor Name"
+                  type="text"
+                  placeholder="Enter Doctor Degrees"
                   className="w-full p-[8px] border focus:outline-none rounded-lg"
                 />
               </div>
@@ -29,6 +29,16 @@ const CreateDoctor = () => {
                 <input
                   type="text"
                   placeholder="Enter Doctor Address"
+                  className="w-full p-[8px] border focus:outline-none rounded-lg"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex-1">
+                <label htmlFor="name">Enter Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter Doctor Name"
                   className="w-full p-[8px] border focus:outline-none rounded-lg"
                 />
               </div>
