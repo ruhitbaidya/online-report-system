@@ -4,7 +4,6 @@ export type TUser = {
     contactNo : string,
     address : string,
     ownerName : string,
-    profileImage ?: string,
     password : string,
     isDelete : boolean
 }

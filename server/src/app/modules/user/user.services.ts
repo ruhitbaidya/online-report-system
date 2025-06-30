@@ -7,7 +7,12 @@ const createUser = async(resdata:TUser)=>{
     return result
 }
 
+const getAllUser = async()=>{
+    const result = await userModel.find();
+    return result
+}
 
 export const userServices = {
-    createUser
+    createUser,
+    getAllUser
 }
