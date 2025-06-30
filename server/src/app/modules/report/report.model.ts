@@ -36,6 +36,14 @@ const reportSchema = new Schema<TReport>(
       type: Boolean,
       default: false,
     },
+    clientId: {
+      type: Schema.ObjectId,
+      required: true,
+    },
+    doctorsId: {
+      type: Schema.ObjectId,
+      default: null,
+    },
   },
   { timestamps: true }
 );
