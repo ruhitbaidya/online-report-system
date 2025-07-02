@@ -38,6 +38,9 @@ const Navbar = () => {
               <li>
                 <NavLink to="/reportMonitor">Report Monitor</NavLink>
               </li>
+              <li>
+                <NavLink to="/alluser">Show All User</NavLink>
+              </li>
             </ul>
           </div>
           <div className="flex gap-[30px]">

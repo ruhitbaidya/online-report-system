@@ -9,6 +9,7 @@ import CreateUser from "../pages/CreateUser";
 import CreateDoctor from "../pages/CreateDoctor";
 import AproveOrder from "../pages/AproveOrder";
 import ReportMonitor from "../pages/ReportMonitor";
+import ShowAllUser from "../pages/ShowAllUser";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/reportMonitor",
         element: <ReportMonitor />,
+      },
+      {
+        path: "/alluser",
+        element: <ShowAllUser />,
       },
     ],
   },
