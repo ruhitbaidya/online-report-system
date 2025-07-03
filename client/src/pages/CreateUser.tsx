@@ -5,7 +5,7 @@ import { useCreateuserMutation } from "../redux/users/users";
 
 const CreateUser = () => {
   const [sendData, { data }] = useCreateuserMutation();
-  const [file, setFile] = useState<FormData | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [disply, setDisply] = useState("");
   const {
     register,
@@ -13,6 +13,10 @@ const CreateUser = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit = async (data: Inputs) => {
+    if (!file) {
+      alert("Fill This File");
+      return;
+    }
     const formData = new FormData();
     formData.append("industyName", data.industyName);
     formData.append("address", data.address);
@@ -20,8 +24,9 @@ const CreateUser = () => {
     formData.append("email", data.email);
     formData.append("ownerName", data.ownerName);
     formData.append("password", data.password);
-    console.log({ ...formData, file });
-    await sendData({ ...formData, file });
+    formData.append("image", file);
+    console.log(formData);
+    await sendData(formData);
   };
   console.log(data);
   return (
@@ -92,9 +97,7 @@ const CreateUser = () => {
                     <input
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if (e.target.files?.[0]) {
-                          const formData = new FormData();
-                          formData.append("image", e.target.files[0]);
-                          setFile(formData);
+                          setFile(e.target.files[0]);
                           setDisply(URL.createObjectURL(e.target.files[0]));
                         }
                       }}
