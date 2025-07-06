@@ -1,6 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import dayjs from "dayjs";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import {
+  useDeleteUserMutation,
+  useGetAllUserQuery,
+} from "../redux/users/users";
+import { toast } from "sonner";
+import { useEffect } from "react";
 const ShowAllUser = () => {
+  const {
+    data: showData,
+    isLoading: showLoading,
+    refetch,
+  } = useGetAllUserQuery(undefined);
+  const [deleteUser, { data: deleteData, isLoading: deleteLoading }] =
+    useDeleteUserMutation();
+  console.log(deleteData?.message);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   return (
     <div>
       <div className="container mx-auto px-[20px]">
@@ -51,25 +70,47 @@ const ShowAllUser = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>asdf12ads4f5 </td>
-                <td>The Popular Diagnostic Center </td>
-                <td>User </td>
-                <td>12/12/2025 </td>
-                <td>ruhitbaidya01@gmail.com </td>
-                <td>01742772705 </td>
-                <td>
-                  <img src="" alt="" />{" "}
-                </td>
-                <td>
-                  <button className="text-green-400">
-                    <FaEdit size={22} />
-                  </button>{" "}
-                  <button className="text-red-500 ml-[8px]">
-                    <MdDelete size={22} />
-                  </button>{" "}
-                </td>
-              </tr>
+              {showLoading && (
+                <tr>
+                  {" "}
+                  <p>Loading....</p>{" "}
+                </tr>
+              )}
+              {showData &&
+                showData?.result?.map((item: any) => (
+                  <tr key={item?._id}>
+                    <td>{item?._id} </td>
+                    <td>{item?.industyName} </td>
+                    <td>{item?.role} </td>
+                    <td>{dayjs(item?.createdAt).format("DD/MM/YYYY")}</td>
+                    <td>{item?.email} </td>
+                    <td>{item?.contactNo}</td>
+                    <td>
+                      <img
+                        className="w-[50px] h-[50px]"
+                        src={item?.profileImage}
+                        alt=""
+                      />{" "}
+                    </td>
+                    <td>
+                      <button className="text-green-400">
+                        <FaEdit size={22} />
+                      </button>{" "}
+                      <button
+                        disabled={deleteLoading}
+                        onClick={async () => {
+                          await deleteUser(item?._id);
+
+                          toast.success(deleteData?.message);
+                          refetch();
+                        }}
+                        className="text-red-500 ml-[8px]"
+                      >
+                        <MdDelete size={22} />
+                      </button>{" "}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

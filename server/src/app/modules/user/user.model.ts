@@ -25,11 +25,11 @@ const userSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      default : "user"
+      default: "user",
     },
     profileImage: {
       type: String,
-      default : null
+      default: "",
     },
     password: {
       type: String,

@@ -9,7 +9,20 @@ const createUser = baseApi.injectEndpoints({
         body: userData,
       }),
     }),
-  })
+    getAllUser: builder.query({
+      query: () => "/get-all-user",
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/delete-user/${id}`,
+        method: "DELETE",
+      }),
+    }),
+  }),
 });
 
-export const { useCreateuserMutation } = createUser;
+export const {
+  useCreateuserMutation,
+  useGetAllUserQuery,
+  useDeleteUserMutation,
+} = createUser;
