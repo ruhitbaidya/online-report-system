@@ -6,7 +6,6 @@ import { userServices } from "./user.services";
 const createUser = catchAsyncFun(async (req, res) => {
   const resData = req.body;
   const imageInfo = await uploadImage("ruhit", req.file?.path as string) 
-  console.log(resData);
   const result = await userServices.createUser({...resData, profileImage : imageInfo?.secure_url})
   return sendReponse(res, {success : true, message : "User Create Successfull", status : 200, data : result})
 });

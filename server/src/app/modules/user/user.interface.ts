@@ -6,5 +6,6 @@ export type TUser = {
     ownerName : string,
     password : string,
     isDelete : boolean,
-    profileImage ?: string
+    profileImage ?: string,
+    role : "user" | "doctor" | "admin"
 }

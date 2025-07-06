@@ -9,7 +9,7 @@ const createUser = baseApi.injectEndpoints({
         body: userData,
       }),
     }),
-  }),
+  })
 });
 
 export const { useCreateuserMutation } = createUser;
