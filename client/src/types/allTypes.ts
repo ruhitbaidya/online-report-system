@@ -6,3 +6,13 @@ export type Inputs = {
   ownerName: string;
   password: string;
 };
+
+export type TDoctors = {
+  name: string;
+  degree: string;
+  addrese: string;
+  email: string;
+  gender: string;
+  contactNo: string;
+  password: string;
+};

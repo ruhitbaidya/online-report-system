@@ -8,5 +8,6 @@ export type TDoctors = {
   contactNo: string;
   profileImage?: string;
   password: string;
+  role: "doctor";
   isDelete: boolean;
 };

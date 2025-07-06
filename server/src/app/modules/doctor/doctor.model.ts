@@ -11,6 +11,10 @@ const doctorsSchema = new Schema<TDoctors>(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: "doctor",
+    },
     addrese: {
       type: String,
       required: true,
@@ -27,10 +31,6 @@ const doctorsSchema = new Schema<TDoctors>(
     contactNo: {
       type: String,
       required: true,
-    },
-    profileImage: {
-      type: String,
-      default: undefined,
     },
     password: {
       type: String,

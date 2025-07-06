@@ -9,7 +9,7 @@ const createDoctor = catchAsyncFun(async (req, res) => {
     success: true,
     status: 200,
     message: "Doctors Create Successfull",
-    data: result,
+    result,
   });
 });
 
@@ -19,7 +19,7 @@ const getAllDoctors = catchAsyncFun(async (req, res) => {
     success: true,
     status: 200,
     message: "Doctors Get Successfull",
-    data: result,
+    result,
   });
 });
 export const doctorsCotroler = {
