@@ -23,6 +23,10 @@ const userSchema = new Schema<TUser>(
       type: String,
       required: true,
     },
+    profileImage: {
+      type: String,
+      default : null
+    },
     password: {
       type: String,
       required: true,
