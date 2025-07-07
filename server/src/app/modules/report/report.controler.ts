@@ -9,7 +9,7 @@ const createReport = catchAsyncFun(async (req, res) => {
     status: 200,
     success: true,
     message: "Save Success",
-    data: result,
+     result,
   });
 });
 
@@ -19,7 +19,7 @@ const getAllReport = catchAsyncFun(async (req, res) => {
     status: 200,
     success: true,
     message: "Get All Reports",
-    data: result,
+     result,
   });
 });
 export const reportControler = {

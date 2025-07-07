@@ -6,7 +6,7 @@ const Login = () => {
     <div>
       <div className="container mx-auto px-[20px] h-screen flex justify-center items-center">
         <div>
-          <div className="border p-[20px] rounded-lg">
+          <div className="border p-[20px] rounded-lg lg:w-[40%] mx-auto mb-[20px]">
             <div className="flex justify-center items-center">
               <SiSimplelogin size={50} />
             </div>
@@ -37,14 +37,13 @@ const Login = () => {
               </div>
             </form>
           </div>
+          <div className="font-bold text-xl">
+            <Marquee>
+              RS Online Solution LTD. Alawyes Ready to for Your Services. Please
+              Contact 01792150202.
+            </Marquee>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <Marquee>
-          I can be a React component, multiple React components, or just some
-          text.
-        </Marquee>
       </div>
     </div>
   );
