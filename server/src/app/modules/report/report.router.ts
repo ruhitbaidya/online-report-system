@@ -4,7 +4,11 @@ import { upload } from "../../utils/fileUpload";
 
 const router = express.Router();
 
-router.post("/create-report", upload.none(), reportControler.createReport);
+router.post(
+  "/create-report",
+  upload.array("testImg"),
+  reportControler.createReport
+);
 router.get("/get-all-report", reportControler.getAllReport);
 
 export const reportRouter = router;

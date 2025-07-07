@@ -3,7 +3,7 @@ import sendReponse from "../../utils/sendResponse";
 import { reportServices } from "./report.services";
 
 const createReport = catchAsyncFun(async (req, res) => {
-  const data = req.body.pasentData;
+  const data = req.body;
   console.log(data);
   // const result = await reportServices.createReport(data);
   // sendReponse(res, {

@@ -19,11 +19,13 @@ const OrderEntry = () => {
     formState: { errors },
   } = useForm<TReport>();
   const onSubmit = async (data: TReport) => {
-    const sendDatas = JSON.stringify({
-      ...data,
-      producer: selectTest,
-    });
-    const fiData = fileForm.append("pasentData", sendDatas);
+    const fiData = fileForm.append(
+      "pasentData",
+      JSON.stringify({
+        ...data,
+        producer: selectTest,
+      })
+    );
     await reportSend(fiData);
     console.log(fiData);
   };
@@ -33,9 +35,7 @@ const OrderEntry = () => {
 
     const imageshow = filesGet.map((item) => URL.createObjectURL(item as Blob));
     setTestImage(imageshow);
-    filesGet.forEach((item, idx) =>
-      fileForm.append(`testImg${idx}`, item as Blob)
-    );
+    filesGet.forEach((item) => fileForm.append(`testImg`, item as Blob));
   };
   const handelChange = (procud: string) => {
     if (procud === "x-ray") {
