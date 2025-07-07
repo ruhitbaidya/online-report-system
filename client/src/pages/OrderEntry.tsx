@@ -26,35 +26,11 @@ const OrderEntry = () => {
                 <h2 className="font-bold border p-[8px] rounded-lg flex-1">
                   The Popular Diagnostic Center
                 </h2>
-                <button
-                  onClick={() => {
-                    const modal = document.getElementById(
-                      "my_modal_1"
-                    ) as HTMLDialogElement | null;
-                    if (modal) {
-                      modal.showModal();
-                    }
-                  }}
-                  className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg"
-                >
+                <button className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg">
                   New Doctor Entry
                 </button>
               </div>
             </div>
-            <dialog id="my_modal_1" className="modal">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">
-                  Press ESC key or click the button below to close
-                </p>
-                <div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
-              </div>
-            </dialog>
             <div className="mb-[10px]">
               <div>
                 <label className="block" htmlFor="pasentId">
@@ -130,19 +106,18 @@ const OrderEntry = () => {
                   </div>
                   <div className="absolute overflow-scroll h-[150px] bg-white">
                     {testName &&
-                      testName?.map((item, indx) => (
+                      testName?.map((item) => (
                         <>
                           <input
-                            key={indx + "asd"}
                             onChange={(e) => {
+                              const fiText = selectTest?.filter(
+                                (item) => item === e?.target?.value
+                              );
                               if (e.target.checked) {
-                                setSelectTest([...selectTest, e.target.value]);
-                              } else {
-                                const fiText = selectTest?.filter(
-                                  (item) => item !== e?.target?.value
-                                );
                                 setSelectTest(fiText);
                               }
+                              console.log(e.target.checked);
+                              setSelectTest(fiText);
                             }}
                             type="checkbox"
                             value={item}
