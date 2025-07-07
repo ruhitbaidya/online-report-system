@@ -16,3 +16,12 @@ export type TDoctors = {
   contactNo: string;
   password: string;
 };
+
+export type TReport = {
+  pasentId: string;
+  pasentName: string;
+  pasentAge: number;
+  pasentGender: string;
+  refDoctor: string;
+  pasentHistory: string;
+};
