@@ -7,37 +7,44 @@ import { useSendReportMutation } from "../redux/report/sendReport";
 
 const OrderEntry = () => {
   const [reportSend, { data, isError }] = useSendReportMutation(undefined);
+  const fileForm = new FormData();
   const [selectTest, setSelectTest] = useState<string[]>([]);
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
   const [testImage, setTestImage] = useState<string[]>([]);
-  // const [sendImage, setSendImage] = useState<unknown[]>([]);
-  const fileForm = new FormData();
+  const [sendImage, setSendImage] = useState<unknown[]>([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TReport>();
   const onSubmit = async (data: TReport) => {
-    const fiData = fileForm.append(
+    fileForm.append(
       "pasentData",
       JSON.stringify({
         ...data,
         producer: selectTest,
       })
     );
-    await reportSend(fiData);
-    console.log(fiData);
+    fileForm.append("image", JSON.stringify(sendImage));
+    console.log(fileForm);
+
+    await reportSend(fileForm);
   };
 
-  const handelTestImage = (e: any) => {
-    const filesGet = Array.from(e.target.files);
+  const handelTestImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const filesGet = Array.from(e.target.files || []);
 
-    const imageshow = filesGet.map((item) => URL.createObjectURL(item as Blob));
-    setTestImage(imageshow);
-    filesGet.forEach((item) => fileForm.append(`testImg`, item as Blob));
+    const imageShow = filesGet.map((file) => URL.createObjectURL(file));
+    setTestImage(imageShow);
+    setSendImage(filesGet);
+    filesGet.forEach((file, idx) => {
+      fileForm.append(`testImg${idx}`, file);
+    });
   };
+
   const handelChange = (procud: string) => {
+    setTestName([]);
     if (procud === "x-ray") {
       setTestName(xrayNames);
     } else {
@@ -60,10 +67,34 @@ const OrderEntry = () => {
                   <h2 className="font-bold border p-[8px] rounded-lg flex-1">
                     The Popular Diagnostic Center
                   </h2>
-                  <button className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const modal = document.getElementById(
+                        "my_modal_1"
+                      ) as HTMLDialogElement | null;
+                      modal?.showModal();
+                    }}
+                    className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg"
+                  >
                     New Doctor Entry
                   </button>
                 </div>
+
+                <dialog id="my_modal_1" className="modal">
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <p className="py-4">
+                      Press ESC key or click the button below to close
+                    </p>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
               </div>
               <div className="mb-[10px]">
                 <div>
@@ -183,6 +214,7 @@ const OrderEntry = () => {
                     name=""
                     id=""
                   >
+                    <option>--select--</option>
                     <option value="x-ray">X-Ray</option>
                     <option value="ecg">ECG</option>
                     <option value="ctscan">CT-Scab</option>
