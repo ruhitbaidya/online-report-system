@@ -16,7 +16,9 @@ export const uploadImage = async (name: string, imageUrl: string) => {
       .catch((error) => {
         console.log(error);
       });
-    fs.unlinkSync(imageUrl);
+    fs.unlink(imageUrl, (err) => {
+      console.log(err);
+    });
     return uploadResult;
   } catch (err) {
     return err;

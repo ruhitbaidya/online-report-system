@@ -1,259 +1,284 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { xrayNames } from "../needJson/test";
 import type { TReport } from "../types/allTypes";
 import { useSendReportMutation } from "../redux/report/sendReport";
 
 const OrderEntry = () => {
-  const [reportSend, { data, isError }] = useSendReportMutation(undefined);
-  const fileForm = new FormData();
+  const [reportSend] = useSendReportMutation();
   const [selectTest, setSelectTest] = useState<string[]>([]);
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
   const [testImage, setTestImage] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TReport>();
+
   const onSubmit = async (data: TReport) => {
-    fileForm.append(
-      "pasentData",
-      JSON.stringify({
-        ...data,
-        producer: selectTest,
-      })
-    );
+    const formData = new FormData();
 
-    await reportSend(fileForm);
-  };
+    // 1️⃣ Combine all form data + selected procedures
+    const patientData = {
+      ...data,
+      producer: selectTest,
+    };
 
-  const handelTestImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      alert("File Not Found");
+    // 2️⃣ Append the JSON string to FormData
+    formData.append("patientData", JSON.stringify(patientData));
+
+    // 3️⃣ Append uploaded files under key `testImg`
+    const fileInput = fileInputRef.current;
+    if (fileInput?.files?.length) {
+      Array.from(fileInput.files).forEach((file) => {
+        formData.append("testImg", file);
+      });
     }
-    const filesGet = Array.from(e.target.files || []);
 
-    const imageShow = filesGet.map((file) => URL.createObjectURL(file));
-    setTestImage(imageShow);
-    filesGet.forEach((file) => {
-      fileForm.append(`testImg`, file);
-    });
+    // 4️⃣ Log for debugging
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    // 5️⃣ Send to API
+    try {
+      await reportSend(formData).unwrap();
+      alert("Report sent successfully!");
+    } catch (error) {
+      console.error("Error sending report:", error);
+    }
   };
 
-  const handelChange = (procud: string) => {
+  const handelChange = (modality: string) => {
     setTestName([]);
-    if (procud === "x-ray") {
+    if (modality === "x-ray") {
       setTestName(xrayNames);
     } else {
       setTestName(["ECG"]);
     }
   };
-  console.log(data, isError);
+
   useEffect(() => {
     setTestName([]);
   }, []);
-  return (
-    <div>
-      <div className="container mx-auto px-[20px]">
-        <div>
-          <h2 className="font-bold text-2xl my-[20px]">Order Entry</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-[80%] mx-auto border rounded-lg p-[10px]">
-              <div className="mb-[10px]">
-                <div className="flex justify-between items-center gap-[30px]">
-                  <h2 className="font-bold border p-[8px] rounded-lg flex-1">
-                    The Popular Diagnostic Center
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const modal = document.getElementById(
-                        "my_modal_1"
-                      ) as HTMLDialogElement | null;
-                      modal?.showModal();
-                    }}
-                    className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg"
-                  >
-                    New Doctor Entry
-                  </button>
-                </div>
 
-                <dialog id="my_modal_1" className="modal">
-                  <div className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">
-                      Press ESC key or click the button below to close
-                    </p>
-                    <div className="modal-action">
-                      <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">Close</button>
-                      </form>
-                    </div>
-                  </div>
-                </dialog>
+  return (
+    <div className="container mx-auto px-[20px]">
+      <h2 className="font-bold text-2xl my-[20px]">Order Entry</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-[80%] mx-auto border rounded-lg p-[10px]">
+          {/* Header & Modal */}
+          <div className="mb-[10px]">
+            <div className="flex justify-between items-center gap-[30px]">
+              <h2 className="font-bold border p-[8px] rounded-lg flex-1">
+                The Popular Diagnostic Center
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  const modal = document.getElementById(
+                    "my_modal_1"
+                  ) as HTMLDialogElement;
+                  modal?.showModal();
+                }}
+                className="bg-gray-700 px-[30px] py-[8px] text-white rounded-lg"
+              >
+                New Doctor Entry
+              </button>
+            </div>
+            <dialog id="my_modal_1" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Hello!</h3>
+                <p className="py-4">
+                  Press ESC key or click the button below to close
+                </p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
               </div>
-              <div className="mb-[10px]">
-                <div>
-                  <label className="block" htmlFor="pasentId">
-                    Pasent Id :{" "}
-                  </label>
+            </dialog>
+          </div>
+
+          {/* Patient ID */}
+          <div className="mb-[10px]">
+            <label className="block">Patient ID:</label>
+            <input
+              {...register("pasentId", { required: true })}
+              className="focus:outline-none border p-[6px] rounded-lg"
+              type="text"
+              placeholder="Patient ID"
+            />
+            {errors.pasentId && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+
+          {/* Name, Age, Gender */}
+          <div className="flex justify-between gap-[30px] mb-[10px]">
+            <div className="flex-1">
+              <label>Patient Name:</label>
+              <input
+                {...register("pasentName", { required: true })}
+                type="text"
+                className="focus:outline-none border p-[6px] w-full rounded-lg"
+              />
+              {errors.pasentName && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            <div className="flex-1">
+              <label>Age:</label>
+              <input
+                {...register("pasentAge", { required: true })}
+                type="number"
+                className="focus:outline-none border p-[6px] w-full rounded-lg"
+              />
+              {errors.pasentAge && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            <div className="flex-1">
+              <label>Gender:</label>
+              <select
+                {...register("pasentGender", { required: true })}
+                className="focus:outline-none border p-[6px] w-full rounded-lg"
+              >
+                <option value="">--Select--</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="others">Others</option>
+              </select>
+              {errors.pasentGender && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+          </div>
+
+          {/* Ref Doctor, Procedure, Modality */}
+          <div className="flex justify-between gap-[30px] mb-[10px]">
+            <div className="flex-1">
+              <label>Ref By:</label>
+              <input
+                {...register("refDoctor", { required: true })}
+                type="text"
+                className="focus:outline-none border p-[6px] w-full rounded-lg"
+              />
+              {errors.refDoctor && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            <div className="flex-1 relative">
+              <label>Procedure:</label>
+              <div
+                className="border rounded-lg p-[6px] cursor-pointer"
+                onClick={() => setToogleTest(!toogleTest)}
+              >
+                {selectTest.length > 0
+                  ? selectTest.join(", ")
+                  : "Select Your Procedure"}
+              </div>
+              {!toogleTest && (
+                <div className="absolute z-10 rounded-lg p-[6px] shadow-lg w-full h-[200px] border bg-white">
                   <input
-                    {...register("pasentId", { required: true })}
-                    className="focus:outline-none border p-[6px] rounded-lg"
+                    className="p-[3px] focus:outline-none rounded-lg mb-[10px] border w-full"
                     type="text"
-                    placeholder="Pasent Id"
+                    placeholder="Search Procedure"
                   />
-                  {errors.pasentId && <span>This field is required</span>}
-                </div>
-              </div>
-              <div className="flex justify-between items-center gap-[30px] mb-[10px]">
-                <div className="flex-1">
-                  <label htmlFor="pName">Pasent Name : </label>
-                  <input
-                    {...register("pasentName", { required: true })}
-                    type="text"
-                    placeholder="Pasent Name"
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                  />
-                  {errors.pasentName && <span>This field is required</span>}
-                </div>
-                <div className="flex-1">
-                  <label htmlFor="age">Age : </label>
-                  <input
-                    {...register("pasentAge", { required: true })}
-                    type="number"
-                    placeholder="Pasent Age"
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                  />
-                  {errors.pasentAge && <span>This field is required</span>}
-                </div>
-                <div className="flex-1">
-                  <label htmlFor="age">Gender : </label>
-                  <select
-                    {...register("pasentGender", { required: true })}
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                    name=""
-                    id=""
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="others">Others</option>
-                  </select>
-                  {errors.pasentGender && <span>This field is required</span>}
-                </div>
-              </div>
-              <div className="flex justify-between items-center gap-[30px] mb-[10px]">
-                <div className="flex-1">
-                  <label htmlFor="refby">Ref By:</label>
-                  <input
-                    {...register("refDoctor", { required: true })}
-                    type="text"
-                    placeholder="Ref By Dr."
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                  />
-                  {errors.refDoctor && <span>This field is required</span>}
-                </div>
-                <div className="flex-1 relative">
-                  <label htmlFor="procuder">Procuder :</label>
-                  <div
-                    className="border rounded-lg p-[6px] cursor-pointer"
-                    onClick={() => setToogleTest(!toogleTest)}
-                  >
-                    {selectTest?.length > 0
-                      ? selectTest.map((item) => <span> {item},</span>)
-                      : "Select Your Procuder"}
-                  </div>
-                  <div
-                    className={`rounded-lg p-[6px] shadow-lg absolute w-full h-[200px]  border bg-white  ${
-                      toogleTest ? "hidden" : ""
-                    }`}
-                  >
-                    <div>
-                      <input
-                        className="p-[3px] focus:outline-none rounded-lg mb-[10px] border"
-                        type="text"
-                        placeholder="Search Your Producer"
-                      />
-                    </div>
-                    <div className="absolute overflow-scroll h-[150px] bg-white">
-                      {testName &&
-                        testName?.map((item, idx) => (
-                          <span key={`tdsc${idx}`}>
-                            <input
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setSelectTest([
-                                    ...selectTest,
-                                    e.target.value,
-                                  ]);
-                                } else {
-                                  const textFi = selectTest.filter(
-                                    (item) => item !== e.target.value
-                                  );
-                                  setSelectTest(textFi);
-                                }
-                              }}
-                              type="checkbox"
-                              value={item}
-                            />{" "}
-                            {item} <br />
-                          </span>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <label htmlFor="modality">Modality :</label>
-                  <select
-                    onChange={(e) => handelChange(e.target.value)}
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                    name=""
-                    id=""
-                  >
-                    <option value="">--select--</option>
-                    <option value="x-ray">X-Ray</option>
-                    <option value="ecg">ECG</option>
-                    <option value="ctscan">CT-Scab</option>
-                    <option value="mri">MRI</option>
-                  </select>
-                </div>
-              </div>
-              <div className="">
-                <div className="flex-1">
-                  <label htmlFor="history">History</label>
-                  <textarea
-                    {...register("pasentHistory", { required: true })}
-                    className="focus:outline-none border p-[6px] w-full rounded-lg"
-                    placeholder="History..."
-                  ></textarea>
-                  {errors.pasentHistory && <span>This field is required</span>}
-                </div>
-              </div>
-              <div className="mt-[10px] flex justify-between items-center">
-                <div className="flex-1">
-                  <input onChange={handelTestImage} type="file" multiple />
-                  <div className="flex items-center gap-[25px] my-[10px]">
-                    {testImage.map((item) => (
-                      <img
-                        className="w-[50px] h-[50px] rounded-lg"
-                        src={item}
-                      />
+                  <div className="overflow-scroll h-[150px]">
+                    {testName.map((item, idx) => (
+                      <div key={`proc-${idx}`}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            value={item}
+                            checked={selectTest.includes(item)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectTest([...selectTest, item]);
+                              } else {
+                                setSelectTest(
+                                  selectTest.filter((t) => t !== item)
+                                );
+                              }
+                            }}
+                          />{" "}
+                          {item}
+                        </label>
+                      </div>
                     ))}
                   </div>
                 </div>
-                <div>
-                  <button className="bg-gray-700 text-white px-[40px] py-[8px] rounded-lg">
-                    Create Order
-                  </button>
-                </div>
+              )}
+            </div>
+            <div className="flex-1">
+              <label>Modality:</label>
+              <select
+                onChange={(e) => handelChange(e.target.value)}
+                className="focus:outline-none border p-[6px] w-full rounded-lg"
+              >
+                <option value="">--select--</option>
+                <option value="x-ray">X-Ray</option>
+                <option value="ecg">ECG</option>
+                <option value="ctscan">CT Scan</option>
+                <option value="mri">MRI</option>
+              </select>
+            </div>
+          </div>
+
+          {/* History */}
+          <div className="mb-[10px]">
+            <label>History:</label>
+            <textarea
+              {...register("pasentHistory", { required: true })}
+              className="focus:outline-none border p-[6px] w-full rounded-lg"
+              placeholder="Enter history..."
+            ></textarea>
+            {errors.pasentHistory && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+
+          {/* File Upload and Submit */}
+          <div className="mt-[10px] flex justify-between items-center">
+            <div className="flex-1">
+              <input
+                type="file"
+                multiple
+                ref={fileInputRef}
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  const previews = files.map((file) =>
+                    URL.createObjectURL(file)
+                  );
+                  setTestImage(previews);
+                }}
+              />
+              <div className="flex gap-[15px] mt-[10px]">
+                {testImage.map((src, idx) => (
+                  <img
+                    key={`img-${idx}`}
+                    src={src}
+                    alt="Preview"
+                    className="w-[50px] h-[50px] rounded-lg object-cover"
+                  />
+                ))}
               </div>
             </div>
-          </form>
+            <button
+              type="submit"
+              className="bg-gray-700 text-white px-[40px] py-[8px] rounded-lg"
+            >
+              Create Order
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
