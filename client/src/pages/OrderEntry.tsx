@@ -12,7 +12,6 @@ const OrderEntry = () => {
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
   const [testImage, setTestImage] = useState<string[]>([]);
-  const [sendImage, setSendImage] = useState<unknown[]>([]);
   const {
     register,
     handleSubmit,
@@ -26,20 +25,20 @@ const OrderEntry = () => {
         producer: selectTest,
       })
     );
-    fileForm.append("image", JSON.stringify(sendImage));
-    console.log(fileForm);
 
     await reportSend(fileForm);
   };
 
   const handelTestImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      alert("File Not Found");
+    }
     const filesGet = Array.from(e.target.files || []);
 
     const imageShow = filesGet.map((file) => URL.createObjectURL(file));
     setTestImage(imageShow);
-    setSendImage(filesGet);
-    filesGet.forEach((file, idx) => {
-      fileForm.append(`testImg${idx}`, file);
+    filesGet.forEach((file) => {
+      fileForm.append(`testImg`, file);
     });
   };
 
@@ -53,7 +52,7 @@ const OrderEntry = () => {
   };
   console.log(data, isError);
   useEffect(() => {
-    setTestName(xrayNames);
+    setTestName([]);
   }, []);
   return (
     <div>
@@ -214,7 +213,7 @@ const OrderEntry = () => {
                     name=""
                     id=""
                   >
-                    <option>--select--</option>
+                    <option value="">--select--</option>
                     <option value="x-ray">X-Ray</option>
                     <option value="ecg">ECG</option>
                     <option value="ctscan">CT-Scab</option>

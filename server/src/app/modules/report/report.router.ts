@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   "/create-report",
-  upload.array("image", 15),
+  upload.array("testImg", 15),
   reportControler.createReport
 );
 router.get("/get-all-report", reportControler.getAllReport);
