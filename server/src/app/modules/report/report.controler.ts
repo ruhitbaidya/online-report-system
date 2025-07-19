@@ -4,6 +4,7 @@ import { uploadImage } from "../../utils/uploadImageCloudinary";
 import { reportServices } from "./report.services";
 
 const createReport = catchAsyncFun(async (req, res) => {
+  const tastImage = [];
   if (Array.isArray(req.files)) {
     const uploadResults = await Promise.all(
       req.files.map((item: Express.Multer.File) =>
@@ -12,8 +13,8 @@ const createReport = catchAsyncFun(async (req, res) => {
     );
 
     console.log("Uploaded URLs:", uploadResults);
-
-    res.json({ urls: uploadResults });
+    const imageUrl = uploadResults.map((item: any) => item?.secure_url);
+    console.log(imageUrl);
   } else {
     res.status(400).json({ message: "No files found" });
   }
