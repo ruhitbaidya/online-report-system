@@ -5,7 +5,7 @@ export type TReport = {
   pasentName: string;
   age: string;
   gender: "male" | "female" | "others";
-  testName: string;
+  producer: string;
   history: string;
   reportImage: string;
   isDelete?: boolean;

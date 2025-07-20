@@ -4,27 +4,36 @@ import { uploadImage } from "../../utils/uploadImageCloudinary";
 import { reportServices } from "./report.services";
 
 const createReport = catchAsyncFun(async (req, res) => {
-  const tastImage = [];
+  const pasentInfo = JSON.parse(req.body.patientData);
+  let imageUrl = [];
+  console.log(pasentInfo);
   if (Array.isArray(req.files)) {
     const uploadResults = await Promise.all(
-      req.files.map((item: Express.Multer.File) =>
-        uploadImage("ruhit", item.path)
+      req.files.map((item: Express.Multer.File, idx) =>
+        uploadImage(
+          `tast${pasentInfo.pasentId}${pasentInfo.pasentName}${idx}`,
+          item.path
+        )
       )
     );
-
-    console.log("Uploaded URLs:", uploadResults);
-    const imageUrl = uploadResults.map((item: any) => item?.secure_url);
+    imageUrl = uploadResults.map((item: any) => item?.secure_url);
     console.log(imageUrl);
   } else {
     res.status(400).json({ message: "No files found" });
+    return;
   }
-  // const result = await reportServices.createReport(data);
-  // sendReponse(res, {
-  //   status: 200,
-  //   success: true,
-  //   message: "Save Success",
-  //    result,
-  // });
+  console.log({ ...pasentInfo, reportImage: imageUrl });
+  const result = await reportServices.createReport({
+    ...pasentInfo,
+    reportImage: imageUrl,
+    clientId: "669b6d84b99914cfb59ec999",
+  });
+  sendReponse(res, {
+    status: 200,
+    success: true,
+    message: "Save Success",
+    result,
+  });
 });
 
 const getAllReport = catchAsyncFun(async (req, res) => {

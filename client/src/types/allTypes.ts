@@ -20,8 +20,8 @@ export type TDoctors = {
 export type TReport = {
   pasentId: string;
   pasentName: string;
-  pasentAge: number;
-  pasentGender: string;
+  age: number;
+  gender: string;
   refDoctor: string;
-  pasentHistory: string;
+  history: string;
 };

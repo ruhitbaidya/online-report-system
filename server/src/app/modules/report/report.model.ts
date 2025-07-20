@@ -20,7 +20,7 @@ const reportSchema = new Schema<TReport>(
       enum: ["male", "female", "others"],
       required: true,
     },
-    testName: {
+    producer: {
       type: String,
       required: true,
     },
@@ -30,7 +30,7 @@ const reportSchema = new Schema<TReport>(
     },
     reportImage: {
       type: String,
-      required: true,
+      enum: [],
     },
     isDelete: {
       type: Boolean,

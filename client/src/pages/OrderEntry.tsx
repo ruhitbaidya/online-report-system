@@ -6,13 +6,13 @@ import type { TReport } from "../types/allTypes";
 import { useSendReportMutation } from "../redux/report/sendReport";
 
 const OrderEntry = () => {
-  const [reportSend] = useSendReportMutation();
+  const [reportSend, { data }] = useSendReportMutation();
   const [selectTest, setSelectTest] = useState<string[]>([]);
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
   const [testImage, setTestImage] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  console.log(data);
   const {
     register,
     handleSubmit,
@@ -45,12 +45,9 @@ const OrderEntry = () => {
     }
 
     // 5️⃣ Send to API
-    try {
-      await reportSend(formData).unwrap();
-      alert("Report sent successfully!");
-    } catch (error) {
-      console.error("Error sending report:", error);
-    }
+
+    await reportSend(formData).unwrap();
+    alert("Report sent successfully!");
   };
 
   const handelChange = (modality: string) => {
@@ -135,18 +132,18 @@ const OrderEntry = () => {
             <div className="flex-1">
               <label>Age:</label>
               <input
-                {...register("pasentAge", { required: true })}
+                {...register("age", { required: true })}
                 type="number"
                 className="focus:outline-none border p-[6px] w-full rounded-lg"
               />
-              {errors.pasentAge && (
+              {errors.age && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
             <div className="flex-1">
               <label>Gender:</label>
               <select
-                {...register("pasentGender", { required: true })}
+                {...register("gender", { required: true })}
                 className="focus:outline-none border p-[6px] w-full rounded-lg"
               >
                 <option value="">--Select--</option>
@@ -154,7 +151,7 @@ const OrderEntry = () => {
                 <option value="female">Female</option>
                 <option value="others">Others</option>
               </select>
-              {errors.pasentGender && (
+              {errors.gender && (
                 <span className="text-red-500">This field is required</span>
               )}
             </div>
@@ -235,11 +232,11 @@ const OrderEntry = () => {
           <div className="mb-[10px]">
             <label>History:</label>
             <textarea
-              {...register("pasentHistory", { required: true })}
+              {...register("history", { required: true })}
               className="focus:outline-none border p-[6px] w-full rounded-lg"
               placeholder="Enter history..."
             ></textarea>
-            {errors.pasentHistory && (
+            {errors.history && (
               <span className="text-red-500">This field is required</span>
             )}
           </div>
