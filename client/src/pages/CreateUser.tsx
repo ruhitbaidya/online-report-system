@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import type { Inputs } from "../types/allTypes";
 import { useState } from "react";
-import { useCreateuserMutation } from "../redux/users/users";
+import { useCreateuserMutation } from "../redux/featchers/users/users";
 
 const CreateUser = () => {
   const [sendData, { data }] = useCreateuserMutation();

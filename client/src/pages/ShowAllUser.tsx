@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import {
   useDeleteUserMutation,
   useGetAllUserQuery,
-} from "../redux/users/users";
+} from "../redux/featchers/users/users";
 import { toast } from "sonner";
 import { useEffect } from "react";
 const ShowAllUser = () => {

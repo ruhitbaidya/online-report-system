@@ -21,7 +21,8 @@ const reportSchema = new Schema<TReport>(
       required: true,
     },
     producer: {
-      type: String,
+      type: [String],
+      default: [],
       required: true,
     },
     history: {
@@ -29,8 +30,9 @@ const reportSchema = new Schema<TReport>(
       required: true,
     },
     reportImage: {
-      type: String,
-      enum: [],
+      type: [String],
+      default: [],
+      required: true,
     },
     isDelete: {
       type: Boolean,

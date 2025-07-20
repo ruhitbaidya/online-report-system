@@ -5,9 +5,9 @@ export type TReport = {
   pasentName: string;
   age: string;
   gender: "male" | "female" | "others";
-  producer: string;
+  producer: string[];
   history: string;
-  reportImage: string;
+  reportImage: string[];
   isDelete?: boolean;
   clientId: Types.ObjectId;
   doctorsId?: Types.ObjectId;

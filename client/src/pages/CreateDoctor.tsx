@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import type { TDoctors } from "../types/allTypes";
-import { useCreateDoctorsMutation } from "../redux/doctors/doctors.api";
+import { useCreateDoctorsMutation } from "../redux/featchers/doctors/doctors.api";
 
 const CreateDoctor = () => {
   const [createDoctors, { data: doctorData, isLoading: doctorLoading }] =

@@ -25,3 +25,8 @@ export type TReport = {
   refDoctor: string;
   history: string;
 };
+
+export type TRefDoctor = {
+  refDoctor: string;
+  clientId: string;
+};

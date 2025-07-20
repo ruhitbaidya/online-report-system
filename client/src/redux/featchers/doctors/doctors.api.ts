@@ -1,5 +1,5 @@
-import type { TDoctors } from "../../types/allTypes";
-import { baseApi } from "../baseApi/baseApi";
+import type { TDoctors } from "../../../types/allTypes";
+import { baseApi } from "../../baseApi/baseApi";
 
 const doctorsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

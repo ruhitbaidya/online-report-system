@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { xrayNames } from "../needJson/test";
 import type { TReport } from "../types/allTypes";
-import { useSendReportMutation } from "../redux/report/sendReport";
+import { useSendReportMutation } from "../redux/featchers/report/sendReport";
+import CreateRefDoctor from "../components/CreateRefDoctor";
 
 const OrderEntry = () => {
   const [reportSend, { data }] = useSendReportMutation();
@@ -89,10 +90,9 @@ const OrderEntry = () => {
             </div>
             <dialog id="my_modal_1" className="modal">
               <div className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">
-                  Press ESC key or click the button below to close
-                </p>
+                <div>
+                  <CreateRefDoctor clientId="6862cfd3366bd452f564ca5f" />
+                </div>
                 <div className="modal-action">
                   <form method="dialog">
                     <button className="btn">Close</button>
