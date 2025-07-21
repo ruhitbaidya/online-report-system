@@ -11,4 +11,5 @@ export type TReport = {
   isDelete?: boolean;
   clientId: Types.ObjectId;
   doctorsId?: Types.ObjectId;
+  status: "pendding" | "progress" | "complate";
 };

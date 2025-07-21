@@ -46,6 +46,10 @@ const reportSchema = new Schema<TReport>(
       type: Schema.ObjectId,
       default: null,
     },
+    status: {
+      type: String,
+      default: "pendding",
+    },
   },
   { timestamps: true }
 );
