@@ -10,7 +10,20 @@ const doctorsApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getAllDoctors: builder.query({
+      query: () => "/get-all-doctors",
+    }),
+    doctorsDelete: builder.mutation({
+      query: (id: string) => ({
+        url: `/delete-doctors/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useCreateDoctorsMutation } = doctorsApi;
+export const {
+  useCreateDoctorsMutation,
+  useGetAllDoctorsQuery,
+  useDoctorsDeleteMutation,
+} = doctorsApi;

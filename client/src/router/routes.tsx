@@ -10,6 +10,7 @@ import CreateDoctor from "../pages/CreateDoctor";
 import AproveOrder from "../pages/AproveOrder";
 import ReportMonitor from "../pages/ReportMonitor";
 import ShowAllUser from "../pages/ShowAllUser";
+import ShowAllDoctor from "../pages/ShowAllDoctor";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/alluser",
         element: <ShowAllUser />,
+      },
+      {
+        path: "/showDoctor",
+        element: <ShowAllDoctor />,
       },
     ],
   },

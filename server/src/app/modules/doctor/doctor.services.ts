@@ -10,7 +10,13 @@ const getAllDoctors = async () => {
   const result = await doctorsModel.find();
   return result;
 };
+
+const deleteDoctor = async (id: string) => {
+  const result = await doctorsModel.deleteOne({ _id: id });
+  return result;
+};
 export const doctorsServices = {
   createDoctos,
   getAllDoctors,
+  deleteDoctor,
 };

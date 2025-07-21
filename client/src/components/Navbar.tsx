@@ -41,6 +41,9 @@ const Navbar = () => {
               <li>
                 <NavLink to="/alluser">Show All User</NavLink>
               </li>
+              <li>
+                <NavLink to="/showDoctor">Show All Doctor</NavLink>
+              </li>
             </ul>
           </div>
           <div className="flex gap-[30px]">

@@ -35,7 +35,19 @@ const getAllDoctors = catchAsyncFun(async (req, res) => {
     result,
   });
 });
+
+const deleteDoctors = catchAsyncFun(async (req, res) => {
+  const ids = req.params.id;
+  const result = await doctorsServices.deleteDoctor(ids);
+  sendReponse(res, {
+    success: true,
+    message: "Doctors Delete Successfull",
+    status: 200,
+    result,
+  });
+});
 export const doctorsCotroler = {
   createDoctor,
   getAllDoctors,
+  deleteDoctors,
 };
