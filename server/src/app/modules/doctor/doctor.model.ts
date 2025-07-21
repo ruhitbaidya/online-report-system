@@ -1,5 +1,7 @@
 import { model, Schema } from "mongoose";
 import { TDoctors } from "./doctorInterface";
+import bcrypt from "bcrypt";
+import { configs } from "../../config/configs";
 
 const doctorsSchema = new Schema<TDoctors>(
   {
@@ -45,15 +47,10 @@ const doctorsSchema = new Schema<TDoctors>(
 );
 
 doctorsSchema.pre("save", async function (next) {
-  try {
-    const matcher = await doctorsModel.findOne({ email: this.email });
-    if (matcher) {
-      return next(new Error("This email already exists."));
-    }
-    next();
-  } catch (err: any) {
-    next(err);
-  }
+  const saltRound = Number(configs.salt_round);
+  const passSalt = await bcrypt.hash(this.password, saltRound);
+  this.password = passSalt;
+  next();
 });
 
 export const doctorsModel = model<TDoctors>("doctors", doctorsSchema);
