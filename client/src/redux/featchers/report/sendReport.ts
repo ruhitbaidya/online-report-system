@@ -15,6 +15,9 @@ const reportsender = baseApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getAllSpeacficReport: builder.query({
+      query: () => `/get-all-report`,
+    }),
   }),
 });
 
