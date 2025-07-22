@@ -9,7 +9,13 @@ const getAllReports = async () => {
   const result = await reportModel.find();
   return result;
 };
+
+const deleteReports = async (id: string) => {
+  const result = await reportModel.findByIdAndDelete(id);
+  return result;
+};
 export const reportServices = {
   createReport,
   getAllReports,
+  deleteReports,
 };

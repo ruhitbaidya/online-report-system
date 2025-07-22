@@ -10,5 +10,5 @@ router.post(
   reportControler.createReport
 );
 router.get("/get-all-report", reportControler.getAllReport);
-
+router.delete("/deleteReport/:id", reportControler.deleteReports);
 export const reportRouter = router;

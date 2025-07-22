@@ -9,7 +9,13 @@ const reportsender = baseApi.injectEndpoints({
         body: report,
       }),
     }),
+    deleteReport: builder.mutation({
+      query: (id: string) => ({
+        url: `/deleteReport/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useSendReportMutation } = reportsender;
+export const { useSendReportMutation, useDeleteReportMutation } = reportsender;
