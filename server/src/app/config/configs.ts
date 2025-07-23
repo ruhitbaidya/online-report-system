@@ -9,4 +9,5 @@ export const configs = {
   coud_Key: process.env.CLOUDINARY_KEY,
   coud_secrate: process.env.CLOUDINARY_SECRATE,
   salt_round: process.env.SALT_ROUND,
+  token_secrate: process.env.TOKEN_SECRATE,
 };
