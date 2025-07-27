@@ -46,7 +46,10 @@ const WorkList = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {data &&
                   data?.result?.map((item: any) => (
-                    <tr className="hover:bg-gray-50 transition-colors duration-150">
+                    <tr
+                      key={item?._id}
+                      className="hover:bg-gray-50 transition-colors duration-150"
+                    >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
                         {item?.pasentId}
                       </td>
@@ -65,9 +68,9 @@ const WorkList = () => {
                         {item?.gender}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {item?.producer?.map((item: string) => (
+                        {item?.producer?.map((item: string, idx: number) => (
                           <>
-                            <span>{item}</span> <br />
+                            <span key={idx}>{item}</span> <br />
                           </>
                         ))}
                       </td>

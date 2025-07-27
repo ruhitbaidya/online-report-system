@@ -28,11 +28,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <OrderEntry />,
+        element: (
+          <OnlyUserRouting>
+            <OrderEntry />
+          </OnlyUserRouting>
+        ),
       },
       {
         path: "/report",
-        element: <Report />,
+        element: (
+          <OnlyUserRouting>
+            <Report />
+          </OnlyUserRouting>
+        ),
       },
       {
         path: "/checkReport",
