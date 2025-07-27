@@ -29,7 +29,8 @@ const getAllUser = catchAsyncFun(async (req, res) => {
 });
 
 const deleteUser = catchAsyncFun(async (req, res) => {
-  const ids = req.params.id;
+  const ids = req?.params?.id;
+
   const result = await userServices.deleteUser(ids);
   sendReponse(res, {
     success: true,
@@ -38,8 +39,21 @@ const deleteUser = catchAsyncFun(async (req, res) => {
     result,
   });
 });
+
+const getSingalUser = catchAsyncFun(async (req, res) => {
+  const ids = req.params.id;
+  console.log(ids);
+  const result = await userServices.getSingalUser(ids);
+  sendReponse(res, {
+    success: true,
+    message: "get singal User",
+    status: 200,
+    result,
+  });
+});
 export const userControler = {
   createUser,
   getAllUser,
   deleteUser,
+  getSingalUser,
 };

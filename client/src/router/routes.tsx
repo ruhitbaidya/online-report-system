@@ -11,6 +11,7 @@ import AproveOrder from "../pages/AproveOrder";
 import ReportMonitor from "../pages/ReportMonitor";
 import ShowAllUser from "../pages/ShowAllUser";
 import ShowAllDoctor from "../pages/ShowAllDoctor";
+import OnlyUserRouting from "../secureRoute/OnlyUserRouting";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <WorkList />,
+        element: (
+          <OnlyUserRouting>
+            <WorkList />
+          </OnlyUserRouting>
+        ),
       },
       {
         path: "/order",

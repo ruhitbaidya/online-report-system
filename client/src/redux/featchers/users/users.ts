@@ -18,6 +18,9 @@ const createUser = baseApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getSingalUser: builder.query({
+      query: (id: string) => `/get-singal-user/${id}`,
+    }),
   }),
 });
 
@@ -25,4 +28,5 @@ export const {
   useCreateuserMutation,
   useGetAllUserQuery,
   useDeleteUserMutation,
+  useGetSingalUserQuery,
 } = createUser;

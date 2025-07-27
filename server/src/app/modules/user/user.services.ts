@@ -11,6 +11,10 @@ const getAllUser = async () => {
   return result;
 };
 
+const getSingalUser = async (id: string) => {
+  const result = await userModel.findOne({ _id: id });
+  return result;
+};
 const deleteUser = async (id: string) => {
   const result = await userModel.deleteOne({ _id: id });
   return result;
@@ -19,4 +23,5 @@ export const userServices = {
   createUser,
   getAllUser,
   deleteUser,
+  getSingalUser,
 };
