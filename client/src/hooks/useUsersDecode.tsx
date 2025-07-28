@@ -30,6 +30,9 @@ const useUsersDecode = () => {
     skip: !userId,
   });
   console.log(data);
+  if (!data?.success && data?.message === "Unauthorize User") {
+    localStorage.removeItem("token");
+  }
   return { user: data?.result, loadings: isLoading };
 };
 

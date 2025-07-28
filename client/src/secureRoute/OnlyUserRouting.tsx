@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 
 const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   const { user, loadings } = useUsersDecode();
+
+  console.log(user);
   if (loadings || !user) {
     return <span className="loading loading-spinner loading-xl"></span>;
   }
