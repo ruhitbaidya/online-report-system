@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useGetSingalUserQuery } from "../redux/featchers/users/users";
 import { useNavigate } from "react-router-dom";
-
-type DecodedToken = {
-  id: string;
-  role: string;
-};
 
 const useUsersDecode = () => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -14,13 +8,7 @@ const useUsersDecode = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        setUserId(decoded.id);
-      } catch (error) {
-        console.error("Invalid token", error);
-        localStorage.removeItem("token");
-      }
+      setUserId("asdfasdf56sd6");
     } else {
       navigate("/login");
     }
