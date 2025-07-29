@@ -12,6 +12,8 @@ import ReportMonitor from "../pages/ReportMonitor";
 import ShowAllUser from "../pages/ShowAllUser";
 import ShowAllDoctor from "../pages/ShowAllDoctor";
 import OnlyUserRouting from "../secureRoute/OnlyUserRouting";
+import OnlyAdminRouting from "../secureRoute/OnlyAdminRouting";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Home />,
+      },
+      {
+        path: "/workList",
         element: (
           <OnlyUserRouting>
             <WorkList />
@@ -44,31 +50,59 @@ const router = createBrowserRouter([
       },
       {
         path: "/checkReport",
-        element: <CheckReport />,
+        element: (
+          <OnlyAdminRouting>
+            <CheckReport />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/createClientUser",
-        element: <CreateUser />,
+        element: (
+          <OnlyAdminRouting>
+            <CreateUser />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/createDoctorUser",
-        element: <CreateDoctor />,
+        element: (
+          <OnlyAdminRouting>
+            <CreateDoctor />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/aproveOrder",
-        element: <AproveOrder />,
+        element: (
+          <OnlyAdminRouting>
+            <AproveOrder />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/reportMonitor",
-        element: <ReportMonitor />,
+        element: (
+          <OnlyAdminRouting>
+            <ReportMonitor />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/alluser",
-        element: <ShowAllUser />,
+        element: (
+          <OnlyAdminRouting>
+            <ShowAllUser />
+          </OnlyAdminRouting>
+        ),
       },
       {
         path: "/showDoctor",
-        element: <ShowAllDoctor />,
+        element: (
+          <OnlyAdminRouting>
+            <ShowAllDoctor />
+          </OnlyAdminRouting>
+        ),
       },
     ],
   },

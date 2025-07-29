@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
 import { useNavigate } from "react-router-dom";
 
-const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
+const OnlyAdminRouting = ({ children }: { children: ReactNode }) => {
   const tokens = localStorage.getItem("token");
   const navigate = useNavigate();
   const { data, error, isLoading } = useTokenVerifyFnQuery(undefined);
@@ -19,7 +19,7 @@ const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   }
 
   console.log(data, error, isLoading);
-  if (data?.result?.role === "user") {
+  if (data?.result?.role === "admin") {
     return <>{children}</>;
   } else {
     localStorage.removeItem("token");
@@ -27,4 +27,4 @@ const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   }
 };
 
-export default OnlyUserRouting;
+export default OnlyAdminRouting;

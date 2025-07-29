@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const result = await userLogin(info).unwrap();
       if (result?.result) {
-        localStorage.setItem("token", result.result);
+        localStorage.setItem("token", result?.result);
         navigate("/");
       }
     } catch (error) {

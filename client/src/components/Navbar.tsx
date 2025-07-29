@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaBell } from "react-icons/fa6";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { useState } from "react";
-import useUsersDecode from "../hooks/useUsersDecode";
+import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
+
 const Navbar = () => {
   const [toggle, setToggle] = useState(true);
-  const { user, loadings } = useUsersDecode();
+  const { data: user, isLoading: loadings } = useTokenVerifyFnQuery(undefined);
   return (
     <div className="bg-gray-700 text-white py-[12px]">
       {loadings ? (
@@ -15,14 +16,16 @@ const Navbar = () => {
         <div className="container mx-auto px-[10px]">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-2xl font-bold">RJ Online</h3>
+              <h3 className="text-2xl font-bold">
+                <Link to="/">RJ Online</Link>
+              </h3>
             </div>
             <div>
               <ul className="flex justify-center items-center gap-[30px]">
-                {user?.role === "user" && (
+                {user?.result?.role === "user" && (
                   <>
                     <li>
-                      <NavLink to="/">Worklist</NavLink>
+                      <NavLink to="/workList">Worklist</NavLink>
                     </li>
                     <li>
                       <NavLink to="/report">Report</NavLink>
@@ -32,7 +35,7 @@ const Navbar = () => {
                     </li>
                   </>
                 )}
-                {user?.role === "admin" && (
+                {user?.result?.role === "admin" && (
                   <>
                     <li>
                       <NavLink to="/checkReport">Check Report</NavLink>
