@@ -14,6 +14,7 @@ import ShowAllDoctor from "../pages/ShowAllDoctor";
 import OnlyUserRouting from "../secureRoute/OnlyUserRouting";
 import OnlyAdminRouting from "../secureRoute/OnlyAdminRouting";
 import Home from "../pages/Home";
+import OnlyDoctorRouting from "../secureRoute/OnlyDoctorRouteing";
 
 const router = createBrowserRouter([
   {
@@ -51,9 +52,9 @@ const router = createBrowserRouter([
       {
         path: "/checkReport",
         element: (
-          <OnlyAdminRouting>
+          <OnlyDoctorRouting>
             <CheckReport />
-          </OnlyAdminRouting>
+          </OnlyDoctorRouting>
         ),
       },
       {

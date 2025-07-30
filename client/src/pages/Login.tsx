@@ -1,8 +1,12 @@
 import Marquee from "react-fast-marquee";
 import { SiSimplelogin } from "react-icons/si";
 import { useForm } from "react-hook-form";
-import { useUserLoginMutation } from "../redux/featchers/auth/user.login";
+import {
+  useDoctorLoginMutation,
+  useUserLoginMutation,
+} from "../redux/featchers/auth/user.login";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type Inputs = {
   user: string;
@@ -10,7 +14,9 @@ type Inputs = {
 };
 
 const Login = () => {
+  const [sendData, setSendData] = useState("user");
   const [userLogin] = useUserLoginMutation();
+  const [doctorsLogin] = useDoctorLoginMutation();
   const navigate = useNavigate();
 
   const {
@@ -20,18 +26,33 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit = async (info: Inputs) => {
-    try {
-      const result = await userLogin(info).unwrap();
-      if (result?.result) {
-        localStorage.setItem("token", result?.result);
-        navigate("/");
+    if (sendData === "user") {
+      try {
+        const result = await userLogin(info).unwrap();
+        if (result?.result) {
+          localStorage.setItem("token", result?.result);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Login failed:", error);
+        alert("Login failed. Please check your credentials.");
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Login failed. Please check your credentials.");
+    }
+
+    if (sendData === "doctor") {
+      try {
+        const result = await doctorsLogin(info).unwrap();
+        if (result?.result) {
+          localStorage.setItem("token", result?.result);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Login failed:", error);
+        alert("Login failed. Please check your credentials.");
+      }
     }
   };
-
+  console.log(sendData);
   return (
     <div className="container mx-auto px-[20px] h-screen flex justify-center items-center">
       <div>
@@ -42,6 +63,28 @@ const Login = () => {
           <h2 className="font-bold text-2xl text-center mb-[15px]">
             Login Your Account
           </h2>
+          <div className="flex justify-end items-center">
+            <div>
+              <button
+                onClick={() => setSendData("user")}
+                className={`border px-[25px] py-[4px] rounded-lg ${
+                  sendData === "user" ? "bg-gray-700 text-white" : ""
+                }`}
+                type="button"
+              >
+                User
+              </button>
+              <button
+                onClick={() => setSendData("doctor")}
+                className={`border px-[25px] py-[4px] rounded-lg ml-[5px] ${
+                  sendData === "doctor" ? "bg-gray-700 text-white" : ""
+                }`}
+                type="button"
+              >
+                Doctor
+              </button>
+            </div>
+          </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div>
               <label htmlFor="userName">Enter User Name</label>

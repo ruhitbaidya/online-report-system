@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaBell } from "react-icons/fa6";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
@@ -6,8 +6,18 @@ import { useState } from "react";
 import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState(true);
-  const { data: user, isLoading: loadings } = useTokenVerifyFnQuery(undefined);
+  const {
+    data: user,
+    isLoading: loadings,
+    isError,
+  } = useTokenVerifyFnQuery(undefined);
+  if (isError) {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+  console.log(user);
   return (
     <div className="bg-gray-700 text-white py-[12px]">
       {loadings ? (
@@ -38,9 +48,6 @@ const Navbar = () => {
                 {user?.result?.role === "admin" && (
                   <>
                     <li>
-                      <NavLink to="/checkReport">Check Report</NavLink>
-                    </li>
-                    <li>
                       <NavLink to="/createClientUser">Create User</NavLink>
                     </li>
                     <li>
@@ -60,6 +67,13 @@ const Navbar = () => {
                     </li>
                   </>
                 )}
+                {user?.result?.role === "doctor" && (
+                  <>
+                    <li>
+                      <NavLink to="/checkReport">Check Report</NavLink>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
             <div className="flex gap-[30px]">
@@ -73,6 +87,17 @@ const Navbar = () => {
                   <MdDarkMode size={22} />
                 )}
               </button>
+              {user && (
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </div>
         </div>

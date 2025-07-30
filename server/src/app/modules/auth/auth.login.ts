@@ -3,6 +3,7 @@ import catchAsyncFun from "../../utils/catchAsyncFunc";
 import sendReponse from "../../utils/sendResponse";
 import { userModel } from "../user/user.model";
 import { createToken } from "./auth.jwt.create";
+import { doctorsModel } from "../doctor/doctor.model";
 
 const userLoginMethod = catchAsyncFun(async (req, res) => {
   const info = req.body;
@@ -38,6 +39,31 @@ const userLoginMethod = catchAsyncFun(async (req, res) => {
   }
 });
 
+const doctorLoginMethod = catchAsyncFun(async (req, res) => {
+  const info = req.body;
+  const doctFounder = await doctorsModel.findOne({ email: info?.user });
+  if (doctFounder) {
+    bcrypt.compare(info.password, doctFounder.password, function (err, result) {
+      if (result) {
+        const result = createToken(doctFounder);
+        return sendReponse(res, {
+          message: "Login Successfull",
+          status: 200,
+          result,
+          success: true,
+        });
+      } else {
+        return sendReponse(res, {
+          message: "Login Failed",
+          status: 200,
+          result: null,
+          success: true,
+        });
+      }
+    });
+  }
+});
 export const authControler = {
   userLoginMethod,
+  doctorLoginMethod,
 };
