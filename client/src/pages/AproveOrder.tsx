@@ -2,10 +2,17 @@
 import { MdDelete } from "react-icons/md";
 import SlidersShoen from "../components/SlidersShoen";
 import { useGetAllDoctorsQuery } from "../redux/featchers/doctors/doctors.api";
-import { useGetAllOrderQuery } from "../redux/featchers/orders/orders";
+import {
+  useApprovedOrderMutation,
+  useGetAllOrderQuery,
+} from "../redux/featchers/orders/orders";
 import { useDeleteReportMutation } from "../redux/featchers/report/sendReport";
 
 const AproveOrder = () => {
+  const [
+    orderAproved,
+    { data: repData, isLoading: repLoading, isError: repError },
+  ] = useApprovedOrderMutation();
   const { data, refetch } = useGetAllOrderQuery(undefined);
   const { data: doctorList } = useGetAllDoctorsQuery(undefined);
   const [deleteReport, { data: deleteReportData }] =
@@ -14,6 +21,11 @@ const AproveOrder = () => {
   const handelOrderDelete = async (id: string) => {
     await deleteReport(id);
     refetch();
+  };
+
+  const aprovedOrders = async (aprId: string, repId: string) => {
+    await orderAproved({ aprId, repId }).unwrap();
+    console.log(repData, repLoading, repError);
   };
   console.log(deleteReportData);
   return (
@@ -52,7 +64,12 @@ const AproveOrder = () => {
                       ))}
                     </td>
                     <td>
-                      <select className="w-full border p-[8px] rounded-lg focus:outline-none">
+                      <select
+                        onChange={(e: any) =>
+                          aprovedOrders(e.target.value, item?._id)
+                        }
+                        className="w-full border p-[8px] rounded-lg focus:outline-none"
+                      >
                         <option>--select--</option>
                         {doctorList &&
                           doctorList?.result?.map((item: any) => (

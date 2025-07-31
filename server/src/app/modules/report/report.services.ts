@@ -10,6 +10,15 @@ const getAllReports = async () => {
   return result;
 };
 
+const aproveOrders = async (ids: { id: { aprId: string; repId: string } }) => {
+  console.log(ids);
+  const result = await reportModel.findOneAndUpdate(
+    { _id: ids?.id?.repId },
+    { $set: { doctorsId: ids?.id?.aprId, status: "approve" } }
+  );
+  console.log(result);
+  return result;
+};
 const deleteReports = async (id: string) => {
   const result = await reportModel.findByIdAndDelete(id);
   return result;
@@ -18,4 +27,5 @@ export const reportServices = {
   createReport,
   getAllReports,
   deleteReports,
+  aproveOrders,
 };

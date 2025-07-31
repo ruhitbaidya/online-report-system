@@ -11,4 +11,5 @@ router.post(
 );
 router.get("/get-all-report", reportControler.getAllReport);
 router.delete("/deleteReport/:id", reportControler.deleteReports);
+router.patch("/aprove-order", reportControler.approveOrder);
 export const reportRouter = router;

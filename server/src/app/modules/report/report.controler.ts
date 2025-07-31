@@ -56,8 +56,21 @@ const deleteReports = catchAsyncFun(async (req, res) => {
     result,
   });
 });
+
+const approveOrder = catchAsyncFun(async (req, res) => {
+  const ids = req.body;
+  console.log(ids);
+  const result = await reportServices.aproveOrders(ids);
+  sendReponse(res, {
+    success: true,
+    message: "Report Aprove",
+    status: 200,
+    result,
+  });
+});
 export const reportControler = {
   createReport,
   getAllReport,
   deleteReports,
+  approveOrder,
 };
