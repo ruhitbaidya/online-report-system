@@ -12,7 +12,6 @@ const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   if (!tokens) {
     navigate("/login");
   }
-
   if (error) {
     localStorage.removeItem("token");
     navigate("/login");

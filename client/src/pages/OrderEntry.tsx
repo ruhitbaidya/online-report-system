@@ -5,15 +5,20 @@ import { xrayNames } from "../needJson/test";
 import type { TReport } from "../types/allTypes";
 import { useSendReportMutation } from "../redux/featchers/report/sendReport";
 import CreateRefDoctor from "../components/CreateRefDoctor";
+import { useGetSingalUserQuery } from "../redux/featchers/users/users";
+import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
 
 const OrderEntry = () => {
+  const [getUserid, setGetUserid] = useState("");
+  const { data: tokenData } = useTokenVerifyFnQuery(undefined);
+  const { data: userData } = useGetSingalUserQuery(getUserid);
   const [reportSend, { data }] = useSendReportMutation();
   const [selectTest, setSelectTest] = useState<string[]>([]);
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
   const [testImage, setTestImage] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  console.log(data);
+  console.log(userData);
   const {
     register,
     handleSubmit,
@@ -61,8 +66,12 @@ const OrderEntry = () => {
   };
 
   useEffect(() => {
+    if (tokenData) {
+      setGetUserid(tokenData?.result?.id);
+    }
+    console.log(tokenData?.result?.id);
     setTestName([]);
-  }, []);
+  }, [tokenData]);
 
   return (
     <div className="container mx-auto px-[20px]">
@@ -73,7 +82,7 @@ const OrderEntry = () => {
           <div className="mb-[10px]">
             <div className="flex justify-between items-center gap-[30px]">
               <h2 className="font-bold border p-[8px] rounded-lg flex-1">
-                The Popular Diagnostic Center
+                {userData?.result?.industyName}
               </h2>
               <button
                 type="button"

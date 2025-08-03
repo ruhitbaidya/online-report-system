@@ -6,7 +6,7 @@ import {
   useUserLoginMutation,
 } from "../redux/featchers/auth/user.login";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Inputs = {
   user: string;
@@ -52,9 +52,7 @@ const Login = () => {
       }
     }
   };
-  useEffect(() => {
-    window.location.reload();
-  }, []);
+
   return (
     <div className="container mx-auto px-[20px] h-screen flex justify-center items-center">
       <div>
