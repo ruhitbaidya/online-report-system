@@ -11,10 +11,12 @@ const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   }
   if (!tokens) {
     navigate("/login");
+    window.location.reload();
   }
   if (error) {
     localStorage.removeItem("token");
     navigate("/login");
+    window.location.reload();
   }
 
   console.log(data, error, isLoading);
@@ -23,6 +25,7 @@ const OnlyUserRouting = ({ children }: { children: ReactNode }) => {
   } else {
     localStorage.removeItem("token");
     navigate("/login");
+    window.location.reload();
   }
 };
 

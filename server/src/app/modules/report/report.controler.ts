@@ -26,7 +26,6 @@ const createReport = catchAsyncFun(async (req, res) => {
   const result = await reportServices.createReport({
     ...pasentInfo,
     reportImage: imageUrl,
-    clientId: "669b6d84b99914cfb59ec999",
   });
   sendReponse(res, {
     status: 200,
@@ -37,7 +36,8 @@ const createReport = catchAsyncFun(async (req, res) => {
 });
 
 const getAllReport = catchAsyncFun(async (req, res) => {
-  const result = await reportServices.getAllReports();
+  const ids = req.params.id;
+  const result = await reportServices.getAllReports(ids);
   sendReponse(res, {
     status: 200,
     success: true,

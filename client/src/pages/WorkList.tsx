@@ -3,9 +3,18 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { useGetAllOrderQuery } from "../redux/featchers/orders/orders";
+import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
+import { useEffect, useState } from "react";
 const WorkList = () => {
-  const { data } = useGetAllOrderQuery(undefined);
-  console.log(data);
+  const [ids, setIds] = useState("");
+  const { data: TData } = useTokenVerifyFnQuery(undefined);
+  const { data } = useGetAllOrderQuery(ids);
+  console.log(data, TData?.result?.id);
+  useEffect(() => {
+    if (TData) {
+      setIds(TData?.result?.id);
+    }
+  }, [TData]);
   return (
     <div>
       <div className="container mx-auto px-[20px]">

@@ -7,12 +7,13 @@ import { useSendReportMutation } from "../redux/featchers/report/sendReport";
 import CreateRefDoctor from "../components/CreateRefDoctor";
 import { useGetSingalUserQuery } from "../redux/featchers/users/users";
 import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
+import { toast } from "sonner";
 
 const OrderEntry = () => {
   const [getUserid, setGetUserid] = useState("");
   const { data: tokenData } = useTokenVerifyFnQuery(undefined);
   const { data: userData } = useGetSingalUserQuery(getUserid);
-  const [reportSend, { data }] = useSendReportMutation();
+  const [reportSend, { data: repoData, isLoading }] = useSendReportMutation();
   const [selectTest, setSelectTest] = useState<string[]>([]);
   const [toogleTest, setToogleTest] = useState<boolean>(true);
   const [testName, setTestName] = useState<string[]>([]);
@@ -23,6 +24,7 @@ const OrderEntry = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<TReport>();
 
   const onSubmit = async (data: TReport) => {
@@ -32,6 +34,7 @@ const OrderEntry = () => {
     const patientData = {
       ...data,
       producer: selectTest,
+      clientId: tokenData?.result?.id,
     };
 
     // 2️⃣ Append the JSON string to FormData
@@ -45,17 +48,10 @@ const OrderEntry = () => {
       });
     }
 
-    // 4️⃣ Log for debugging
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
-    // 5️⃣ Send to API
-
     await reportSend(formData).unwrap();
-    alert("Report sent successfully!");
   };
 
+  console.log(repoData);
   const handelChange = (modality: string) => {
     setTestName([]);
     if (modality === "x-ray") {
@@ -69,9 +65,13 @@ const OrderEntry = () => {
     if (tokenData) {
       setGetUserid(tokenData?.result?.id);
     }
-    console.log(tokenData?.result?.id);
+    if (repoData) {
+      toast.success(repoData?.message);
+      reset();
+      setTestImage([]);
+    }
     setTestName([]);
-  }, [tokenData]);
+  }, [tokenData, repoData, reset]);
 
   return (
     <div className="container mx-auto px-[20px]">
@@ -280,7 +280,11 @@ const OrderEntry = () => {
               type="submit"
               className="bg-gray-700 text-white px-[40px] py-[8px] rounded-lg"
             >
-              Create Order
+              {isLoading ? (
+                <span className="loading loading-spinner loading-md"></span>
+              ) : (
+                "Create Order"
+              )}
             </button>
           </div>
         </div>

@@ -9,7 +9,7 @@ router.post(
   upload.array("testImg", 15),
   reportControler.createReport
 );
-router.get("/get-all-report", reportControler.getAllReport);
+router.get("/get-all-report/:id", reportControler.getAllReport);
 router.delete("/deleteReport/:id", reportControler.deleteReports);
 router.patch("/aprove-order", reportControler.approveOrder);
 export const reportRouter = router;

@@ -4,7 +4,7 @@ import { baseApi } from "../../baseApi/baseApi";
 const orderOperation = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllOrder: builder.query({
-      query: () => "/get-all-report",
+      query: (ids: string) => `/get-all-report/${ids}`,
     }),
     approvedOrder: builder.mutation({
       query: (id: { aprId: string; repId: string }) => ({

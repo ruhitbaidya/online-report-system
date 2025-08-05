@@ -5,8 +5,8 @@ const createReport = async (data: TReport) => {
   const result = await reportModel.create(data);
   return result;
 };
-const getAllReports = async () => {
-  const result = await reportModel.find();
+const getAllReports = async (id: string) => {
+  const result = await reportModel.find({ clientId: id });
   return result;
 };
 
