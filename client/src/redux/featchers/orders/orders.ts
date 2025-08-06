@@ -13,7 +13,14 @@ const orderOperation = baseApi.injectEndpoints({
         body: { id },
       }),
     }),
+    adminGetReport: builder.query({
+      query: () => "/admin-report",
+    }),
   }),
 });
 
-export const { useGetAllOrderQuery, useApprovedOrderMutation } = orderOperation;
+export const {
+  useGetAllOrderQuery,
+  useApprovedOrderMutation,
+  useAdminGetReportQuery,
+} = orderOperation;

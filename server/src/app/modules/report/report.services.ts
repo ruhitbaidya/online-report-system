@@ -10,6 +10,10 @@ const getAllReports = async (id: string) => {
   return result;
 };
 
+const getAdminReport = async () => {
+  const result = await reportModel.find({ status: "pendding" });
+  return result;
+};
 const aproveOrders = async (ids: { id: { aprId: string; repId: string } }) => {
   console.log(ids);
   const result = await reportModel.findOneAndUpdate(
@@ -28,4 +32,5 @@ export const reportServices = {
   getAllReports,
   deleteReports,
   aproveOrders,
+  getAdminReport,
 };

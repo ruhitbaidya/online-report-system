@@ -3,8 +3,8 @@ import { MdDelete } from "react-icons/md";
 import SlidersShoen from "../components/SlidersShoen";
 import { useGetAllDoctorsQuery } from "../redux/featchers/doctors/doctors.api";
 import {
+  useAdminGetReportQuery,
   useApprovedOrderMutation,
-  useGetAllOrderQuery,
 } from "../redux/featchers/orders/orders";
 import { useDeleteReportMutation } from "../redux/featchers/report/sendReport";
 
@@ -13,7 +13,7 @@ const AproveOrder = () => {
     orderAproved,
     { data: repData, isLoading: repLoading, isError: repError },
   ] = useApprovedOrderMutation();
-  const { data, refetch } = useGetAllOrderQuery(undefined);
+  const { data, refetch } = useAdminGetReportQuery(undefined);
   const { data: doctorList } = useGetAllDoctorsQuery(undefined);
   const [deleteReport, { data: deleteReportData }] =
     useDeleteReportMutation(undefined);
