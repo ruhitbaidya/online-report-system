@@ -25,8 +25,9 @@ const AproveOrder = () => {
 
   const aprovedOrders = async (aprId: string, repId: string) => {
     await orderAproved({ aprId, repId }).unwrap();
-    console.log(repData, repLoading, repError);
+    refetch();
   };
+  console.log(repData, repLoading, repError);
   console.log(deleteReportData);
   return (
     <div>
