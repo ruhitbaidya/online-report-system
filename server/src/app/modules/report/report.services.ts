@@ -10,6 +10,10 @@ const getAllReports = async (id: string) => {
   return result;
 };
 
+const getSparceficeReport = async (id: string) => {
+  const result = await reportModel.find({ doctorsId: id });
+  return result;
+};
 const getAdminReport = async () => {
   const result = await reportModel.find({ status: "pendding" });
   return result;
@@ -33,4 +37,5 @@ export const reportServices = {
   deleteReports,
   aproveOrders,
   getAdminReport,
+  getSparceficeReport,
 };

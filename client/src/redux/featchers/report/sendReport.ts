@@ -16,9 +16,13 @@ const reportsender = baseApi.injectEndpoints({
       }),
     }),
     getAllSpeacficReport: builder.query({
-      query: () => `/get-all-report`,
+      query: (id: string) => `/doctor-geting/${id}`,
     }),
   }),
 });
 
-export const { useSendReportMutation, useDeleteReportMutation } = reportsender;
+export const {
+  useSendReportMutation,
+  useDeleteReportMutation,
+  useGetAllSpeacficReportQuery,
+} = reportsender;

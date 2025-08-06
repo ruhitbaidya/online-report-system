@@ -1,7 +1,19 @@
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
+import { useEffect, useState } from "react";
+import { useGetAllSpeacficReportQuery } from "../redux/featchers/report/sendReport";
+import SlidersShoen from "../components/SlidersShoen";
 
 const CheckReport = () => {
+  const { data: tokenData } = useTokenVerifyFnQuery(undefined);
+  const [ids, setIds] = useState("");
+  const { data } = useGetAllSpeacficReportQuery(ids);
+
+  useEffect(() => {
+    if (tokenData) {
+      setIds(tokenData?.result?.id);
+    }
+  }, [tokenData]);
   return (
     <div>
       <div className="container mx-auto px-[20px]">
@@ -38,76 +50,75 @@ const CheckReport = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                <tr className="hover:bg-gray-50 transition-colors duration-150">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
-                    123
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <select name="" id="">
-                      <option value="">In Progress</option>
-                      <option value="">Complate</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    Ruhit Baidya
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    27 Yrs
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {/* Open the modal using document.getElementById('ID').showModal() method */}
-                    <button
-                      className="bg-gray-700 text-white px-[25px] py-[8px] rounded-lg"
-                      onClick={() => {
-                        const modal = document.getElementById(
-                          "my_modal_1"
-                        ) as HTMLDialogElement | null;
-                        if (modal) {
-                          modal.showModal();
-                        }
-                      }}
+                {data &&
+                  data?.result?.map((item: any) => (
+                    <tr
+                      key={item._id}
+                      className="hover:bg-gray-50 transition-colors duration-150"
                     >
-                      Create Report
-                    </button>
-                    <dialog id="my_modal_1" className="modal">
-                      <div className="modal-box">
-                        <h3 className="font-bold text-lg">Hello!</h3>
-                        <p className="py-4">
-                          Press ESC key or click the button below to close
-                        </p>
-                        <div className="modal-action">
-                          <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
-                            <button className="btn">Close</button>
-                          </form>
-                        </div>
-                      </div>
-                    </dialog>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    Chest P/A View
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    <Zoom>
-                      <img
-                        className="w-[50px] h-[50px]"
-                        alt="That Wanaka Tree, New Zealand by Laura Smetsers"
-                        src="https://media.istockphoto.com/id/92988886/photo/chest-x-ray-image-for-physicians-examination.jpg?s=612x612&w=0&k=20&c=BNbsxzfiHWIQHgaDCb-nw8t0nmzFOsgAwGDeMBdMx5I="
-                        width="500"
-                      />
-                    </Zoom>
-                  </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
+                        {item?.pasentId}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select name="" id="">
+                          <option value="">In Progress</option>
+                          <option value="">Complate</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {item?.pasentName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {item?.age} Yrs
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {/* Open the modal using document.getElementById('ID').showModal() method */}
+                        <button
+                          className="bg-gray-700 text-white px-[25px] py-[8px] rounded-lg"
+                          onClick={() => {
+                            const modal = document.getElementById(
+                              "my_modal_1"
+                            ) as HTMLDialogElement | null;
+                            if (modal) {
+                              modal.showModal();
+                            }
+                          }}
+                        >
+                          Create Report
+                        </button>
+                        <dialog id="my_modal_1" className="modal">
+                          <div className="modal-box">
+                            <h3 className="font-bold text-lg">Hello!</h3>
+                            <div></div>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                {/* if there is a button in form, it will close the modal */}
+                                <button className="btn">Close</button>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {item?.producer?.map((pro: string) => (
+                          <>
+                            <span>{pro}</span>
+                            <br />
+                          </>
+                        ))}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        <SlidersShoen image={item?.reportImage} />
+                      </td>
 
-                  <td
-                    title="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iure, blanditiis autem. Culpa, alias at nobis molestiae
-                    suscipit nam minus dolorum corrupti repellendus est, atque
-                    laboriosam ut, quam facilis! Aspernatur, enim."
-                    className="px-6 py-4 whitespace-nowrap text-sm font-medium"
-                  >
-                    history
-                  </td>
-                </tr>
+                      <td
+                        title={item?.history}
+                        className="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                      >
+                        History
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

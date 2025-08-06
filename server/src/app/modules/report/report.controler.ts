@@ -55,6 +55,17 @@ const getAdminReports = catchAsyncFun(async (req, res) => {
     result,
   });
 });
+
+const getSpaceficReport = catchAsyncFun(async (req, res) => {
+  const ids = req.params.id;
+  const result = await reportServices.getSparceficeReport(ids);
+  sendReponse(res, {
+    status: 200,
+    success: true,
+    message: "Get All Reports",
+    result,
+  });
+});
 const deleteReports = catchAsyncFun(async (req, res) => {
   const ids = req.params.id;
   const result = await reportServices.deleteReports(ids);
@@ -83,4 +94,5 @@ export const reportControler = {
   deleteReports,
   approveOrder,
   getAdminReports,
+  getSpaceficReport,
 };

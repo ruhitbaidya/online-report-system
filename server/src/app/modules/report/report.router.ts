@@ -13,4 +13,5 @@ router.get("/get-all-report/:id", reportControler.getAllReport);
 router.delete("/deleteReport/:id", reportControler.deleteReports);
 router.patch("/aprove-order", reportControler.approveOrder);
 router.get("/admin-report", reportControler.getAdminReports);
+router.get("/doctor-geting/:id", reportControler.getSpaceficReport);
 export const reportRouter = router;
