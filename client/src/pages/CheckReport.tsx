@@ -3,6 +3,7 @@ import { useTokenVerifyFnQuery } from "../redux/featchers/token/tokenVerify";
 import { useEffect, useState } from "react";
 import { useGetAllSpeacficReportQuery } from "../redux/featchers/report/sendReport";
 import SlidersShoen from "../components/SlidersShoen";
+import ReportingTabs from "../components/ReportingTabs";
 
 const CheckReport = () => {
   const { data: tokenData } = useTokenVerifyFnQuery(undefined);
@@ -77,7 +78,7 @@ const CheckReport = () => {
                           className="bg-gray-700 text-white px-[25px] py-[8px] rounded-lg"
                           onClick={() => {
                             const modal = document.getElementById(
-                              "my_modal_1"
+                              "my_modal_4"
                             ) as HTMLDialogElement | null;
                             if (modal) {
                               modal.showModal();
@@ -86,10 +87,12 @@ const CheckReport = () => {
                         >
                           Create Report
                         </button>
-                        <dialog id="my_modal_1" className="modal">
-                          <div className="modal-box">
+                        <dialog id="my_modal_4" className="modal">
+                          <div className="modal-box w-11/12 max-w-5xl">
                             <h3 className="font-bold text-lg">Hello!</h3>
-                            <div></div>
+                            <div>
+                              <ReportingTabs tabsCount={item?.producer} />
+                            </div>
                             <div className="modal-action">
                               <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
