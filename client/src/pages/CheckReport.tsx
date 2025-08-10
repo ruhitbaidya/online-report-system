@@ -89,7 +89,6 @@ const CheckReport = () => {
                         </button>
                         <dialog id="my_modal_4" className="modal">
                           <div className="modal-box w-11/12 max-w-5xl">
-                            <h3 className="font-bold text-lg">Hello!</h3>
                             <div>
                               <ReportingTabs tabsCount={item?.producer} />
                             </div>
